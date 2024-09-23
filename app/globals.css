@@ -84,6 +84,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-body {
-  font-size: 0.6em;
-}
