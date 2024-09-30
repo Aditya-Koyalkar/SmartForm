@@ -1,7 +1,18 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 
 const Header = () => {
+  const user = useSession();
+
   return (
     <div className="p-5 shadow-md border">
       <div className="flex justify-between items-center">
@@ -11,7 +22,53 @@ const Header = () => {
             Smart Form AI
           </div>
         </div>
-        <Button>Get Started</Button>
+        <div>
+          {user.data ? (
+            <div className="flex items-center justify-between">
+              <Button>Dashboard</Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  {user.data.user?.image ? (
+                    <Image
+                      src={`${user.data.user?.image}`}
+                      height={40}
+                      width={35}
+                      alt="image"
+                      className=" ml-5 rounded-full cursor-pointer"
+                    />
+                  ) : (
+                    <div className=" rounded-full ml-5 cursor-pointer h-10 w-10 ">
+                      {user.data.user?.name}
+                    </div>
+                  )}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem className=" text-primary font-bold">
+                    {user.data.user?.name}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>{user.data.user?.email}</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button
+                      onClick={() => signOut()}
+                      variant={"secondary"}
+                      className="border-2"
+                    >
+                      Logout
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <Button
+              onClick={async () => {
+                await signIn();
+              }}
+            >
+              Get Started
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );
