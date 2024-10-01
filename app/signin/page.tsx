@@ -1,12 +1,21 @@
 "use client";
-import React from "react";
-import { signIn } from "next-auth/react";
+import React, { useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
+import { redirect } from "next/navigation";
 
 export default function SignInPage() {
+  const user = useSession();
+  useEffect(() => {
+    if (user.data?.user) {
+      redirect("/dashboard");
+    }
+  }, []);
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl: "/" });
+    toast({ description: "Signup Successful!" });
   };
 
   return (

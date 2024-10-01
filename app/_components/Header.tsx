@@ -6,9 +6,11 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/hooks/use-toast";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   const user = useSession();
@@ -25,7 +27,10 @@ const Header = () => {
         <div>
           {user.data ? (
             <div className="flex items-center justify-between">
-              <Button>Dashboard</Button>
+              <Button>
+                {" "}
+                <Link href={"/dashboard"}>Dashboard</Link>
+              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   {user.data.user?.image ? (
@@ -49,7 +54,12 @@ const Header = () => {
                   <DropdownMenuItem>{user.data.user?.email}</DropdownMenuItem>
                   <DropdownMenuItem>
                     <Button
-                      onClick={() => signOut()}
+                      onClick={async () => {
+                        await signOut();
+                        toast({
+                          description: "Logout successful",
+                        });
+                      }}
                       variant={"secondary"}
                       className="border-2"
                     >
