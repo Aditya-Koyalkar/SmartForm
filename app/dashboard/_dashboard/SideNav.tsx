@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { LibraryBig, LineChart, MessageSquare, Shield } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -50,8 +51,17 @@ export const SideNav = () => {
           </div>
         ))}
       </div>
-      <div className="fixed bottom-20 p-6">
-        <Button>+ Create Form</Button>
+      <div className="fixed bottom-10 p-6 w-64">
+        <Button className="w-full">+ Create Form</Button>
+        <div className="my-7">
+          <Progress value={33} />
+          <div className="text-sm mt-2 text-gray-600">
+            <b> 2 out of 3</b> File Created
+          </div>
+          <div className="text-sm mt-2 text-gray-600">
+            Upgrade your plan for unlimited AI forms
+          </div>
+        </div>
       </div>
     </div>
   );
