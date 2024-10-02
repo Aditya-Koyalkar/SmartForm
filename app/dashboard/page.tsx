@@ -5,6 +5,8 @@ import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { Spinner } from "../_components/Spinner";
+import { Button } from "@/components/ui/button";
+import { CreateForm } from "./_components/CreateForm";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -15,5 +17,12 @@ export default function Dashboard() {
     signIn();
   }
 
-  return <div>Dashboard</div>;
+  return (
+    <div className="p-10">
+      <div className="font-bold text-3xl flex items-center justify-between">
+        <div>DashBoard</div>
+        <CreateForm />
+      </div>
+    </div>
+  );
 }
