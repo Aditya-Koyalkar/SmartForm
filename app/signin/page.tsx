@@ -5,19 +5,22 @@ import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { redirect } from "next/navigation";
+import { Spinner } from "../_components/Spinner";
 
 export default function SignInPage() {
-  const user = useSession();
-  useEffect(() => {
-    if (user.data?.user) {
-      redirect("/dashboard");
-    }
-  }, []);
+  const { data: session, status } = useSession();
+
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl: "/" });
     toast({ description: "Signup Successful!" });
   };
-
+  if (status == "authenticated") {
+    toast({ description: "U are already logged in" });
+    redirect("/dashboard");
+  }
+  if (status == "loading") {
+    return <Spinner />;
+  }
   return (
     <div className="flex  justify-center  bg-gray-100 h-screen">
       <div className="w-full mt-[100px] max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md h-[250px]">
