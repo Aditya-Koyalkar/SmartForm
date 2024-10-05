@@ -11,8 +11,17 @@ import {
 } from "@/components/ui/select";
 
 import React from "react";
+import { FieldEdit } from "./FieldEdit";
 
-export const FormUI = ({ jsonForm }: { jsonForm: JSONForm }) => {
+export const FormUI = ({
+  jsonForm,
+  onFieldUpdate,
+  onDelete,
+}: {
+  jsonForm: JSONForm;
+  onFieldUpdate: (label: string, placeholder: string, index: number) => void;
+  onDelete: (index: number) => void;
+}) => {
   return (
     <div className="md:w-[600px] border rounded-xl p-6">
       <div className="font-bold text-center text-xl">{jsonForm.formTitle}</div>
@@ -24,7 +33,21 @@ export const FormUI = ({ jsonForm }: { jsonForm: JSONForm }) => {
           <div key={index}>
             {field.fieldType == "select" ? (
               <div className="flex flex-col gap-1">
-                <div className="font-semibold">{field.label}</div>
+                <div className="flex items-center">
+                  <Label
+                    className="font-semibold w-[96%]"
+                    htmlFor={field.firstName}
+                  >
+                    {field.label}
+                  </Label>
+                  <FieldEdit
+                    defaultValue={field}
+                    onUpdate={(label, placeholder) => {
+                      onFieldUpdate(label, placeholder, index);
+                    }}
+                    onDelete={() => onDelete(index)}
+                  />
+                </div>
                 <Select>
                   <SelectTrigger>
                     <SelectValue placeholder={field.placeholder} />
@@ -40,7 +63,21 @@ export const FormUI = ({ jsonForm }: { jsonForm: JSONForm }) => {
               </div>
             ) : field.fieldType == "radio" ? (
               <div className="flex flex-col gap-1">
-                <Label className="font-semibold">{field.label}</Label>
+                <div className="flex items-center">
+                  <Label
+                    className="font-semibold w-[96%]"
+                    htmlFor={field.firstName}
+                  >
+                    {field.label}
+                  </Label>
+                  <FieldEdit
+                    defaultValue={field}
+                    onUpdate={(label, placeholder) => {
+                      onFieldUpdate(label, placeholder, index);
+                    }}
+                    onDelete={() => onDelete(index)}
+                  />
+                </div>
                 <RadioGroup defaultValue="option-one">
                   {field.options.map((option, index) => (
                     <div key={index} className="flex items-center space-x-2">
@@ -52,9 +89,21 @@ export const FormUI = ({ jsonForm }: { jsonForm: JSONForm }) => {
               </div>
             ) : field.fieldType == "checkbox" ? (
               <div className="flex flex-col gap-1">
-                <Label className="font-semibold" htmlFor={field.firstName}>
-                  {field.label}
-                </Label>
+                <div className="flex items-center">
+                  <Label
+                    className="font-semibold w-[96%]"
+                    htmlFor={field.firstName}
+                  >
+                    {field.label}
+                  </Label>
+                  <FieldEdit
+                    defaultValue={field}
+                    onUpdate={(label, placeholder) => {
+                      onFieldUpdate(label, placeholder, index);
+                    }}
+                    onDelete={() => onDelete(index)}
+                  />
+                </div>
                 <div className="grid grid-cols-2  md:grid-cols-3 gap-2 ">
                   {field.options.map((option, index) => (
                     <div key={index} className="flex items-center gap-2">
@@ -66,9 +115,21 @@ export const FormUI = ({ jsonForm }: { jsonForm: JSONForm }) => {
               </div>
             ) : (
               <div className="flex flex-col gap-1">
-                <Label className="font-semibold" htmlFor={field.firstName}>
-                  {field.label}
-                </Label>
+                <div className="flex items-center">
+                  <Label
+                    className="font-semibold w-[96%]"
+                    htmlFor={field.firstName}
+                  >
+                    {field.label}
+                  </Label>
+                  <FieldEdit
+                    defaultValue={field}
+                    onUpdate={(label, placeholder) => {
+                      onFieldUpdate(label, placeholder, index);
+                    }}
+                    onDelete={() => onDelete(index)}
+                  />
+                </div>
                 <Input
                   placeholder={field.placeholder}
                   type={field.fieldType}

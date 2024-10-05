@@ -3,9 +3,11 @@ import { Spinner } from "@/app/_components/Spinner";
 import { GetMyForm } from "@/app/actions/GetMyForm";
 import { ArrowLeft } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormUI, JSONForm } from "./_components/FormUi";
+import { UpdateFormDB } from "@/app/actions/UpdateForm";
+import { toast } from "sonner";
 
 export default function EditForm({ params }: { params: any }) {
   const formId = params.formId;
@@ -24,7 +26,9 @@ export default function EditForm({ params }: { params: any }) {
       },
     ],
   });
+  const [updateTrigger, setUpdateTrigger] = useState<number>();
   const router = useRouter();
+
   useEffect(() => {
     const getMyForm = async () => {
       const res = await GetMyForm(formId);
@@ -32,8 +36,40 @@ export default function EditForm({ params }: { params: any }) {
     };
     getMyForm();
   }, [formId, user]);
-  console.log(jsonForm);
 
+  useEffect(() => {
+    if (updateTrigger) {
+      setJsonForm(jsonForm);
+      updateJsonDB();
+    }
+  }, [updateTrigger]);
+  const updateJsonDB = async () => {
+    const result = await UpdateFormDB(
+      JSON.stringify(jsonForm),
+      formId,
+      user.data?.user?.email as string
+    );
+    toast("Updated!!");
+  };
+  const onFieldUpdate = (label: string, placeholder: string, index: number) => {
+    jsonForm.formFields[index].label = label;
+    jsonForm.formFields[index].placeholder = placeholder;
+    setUpdateTrigger(Date.now());
+  };
+
+  const onDeleteField = async (index: number) => {
+    const updatedJson = {
+      ...jsonForm,
+      formFields: jsonForm.formFields.filter((field, i) => i != index),
+    };
+    setJsonForm(updatedJson as JSONForm);
+    await UpdateFormDB(
+      JSON.stringify(updatedJson),
+      formId,
+      user.data?.user?.email as string
+    );
+    toast("deleted");
+  };
   if (user.status == "unauthenticated") {
     signIn();
   }
@@ -52,7 +88,11 @@ export default function EditForm({ params }: { params: any }) {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <div className="p-5  md:w-[400px] border rounded-lg">Controller</div>
           <div className="col-span-2 flex  rounded-xl   w-full h-full">
-            <FormUI jsonForm={jsonForm} />
+            <FormUI
+              jsonForm={jsonForm}
+              onFieldUpdate={onFieldUpdate}
+              onDelete={onDeleteField}
+            />
           </div>
         </div>
       </div>

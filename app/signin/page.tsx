@@ -3,19 +3,19 @@ import React, { useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
 import { redirect } from "next/navigation";
 import { Spinner } from "../_components/Spinner";
+import { toast } from "sonner";
 
 export default function SignInPage() {
   const { data: session, status } = useSession();
 
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl: "/" });
-    toast({ description: "Signup Successful!" });
+    toast("Signup Successful!");
   };
   if (status == "authenticated") {
-    toast({ description: "U are already logged in" });
+    toast("U are already logged in");
     redirect("/dashboard");
   }
   if (status == "loading") {
