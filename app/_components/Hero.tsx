@@ -16,10 +16,10 @@ const Hero = () => {
             </strong>
           </h1>
 
-          <p className="mt-4 sm:text-xl/relaxed text-slate-600">
+          <div className="mt-4 sm:text-xl/relaxed text-slate-600">
             Create custom forms in seconds with our intuitive AI form builder.
             Designed for ease and efficiency!
-          </p>
+          </div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link

@@ -27,6 +27,6 @@ model Form {
   id String @id @default(cuid())
   jsonform String 
   createdBy String
-  createdAt DateTime @default(now())
-  user User @relation(fields: [createdBy],references: [id])
+  createdAt String 
+  user User @relation(fields: [createdBy],references: [email])
 }

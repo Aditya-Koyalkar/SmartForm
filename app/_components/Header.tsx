@@ -39,7 +39,7 @@ const Header = () => {
                       height={40}
                       width={35}
                       alt="image"
-                      className=" ml-5 rounded-full cursor-pointer"
+                      className=" ml-5 h-auto w-auto rounded-full cursor-pointer"
                     />
                   ) : (
                     <div className=" rounded-full ml-5 cursor-pointer h-10 w-10 ">

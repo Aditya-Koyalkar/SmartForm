@@ -45,6 +45,9 @@ const config: Config = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        lexend: ["Lexend Deca", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

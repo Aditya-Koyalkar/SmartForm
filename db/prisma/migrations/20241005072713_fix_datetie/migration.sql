@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Form" ALTER COLUMN "createdAt" DROP DEFAULT,
+ALTER COLUMN "createdAt" SET DATA TYPE TEXT;
