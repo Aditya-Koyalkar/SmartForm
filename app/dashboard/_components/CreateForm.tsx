@@ -30,7 +30,7 @@ export const CreateForm = () => {
     return <Spinner />;
   }
   const onCreateForm = async () => {
-    const prompt = `Description: ${userInput} , On the basis of the given description please give form in json format with form title , form subheading and formFields which have fieldName , placeholder,label,fieldType,required ,options if it is a select type or radio or checkbox type else empty []  and provide in the format , for radio {formTitle : string,formSubHeading : string , formFields : [{firstName : string,placeholder : string , label : string , fieldType : string , required : boolean},options : [string]]}`;
+    const prompt = `Description: ${userInput} , On the basis of the given description please give form in json format with form title , form subheading and formFields which have fieldName , placeholder,label,fieldType,required ,options if it is a select type or radio or checkbox type else empty []  and provide in the format , for radio {formTitle : string,formSubHeading : string , formFields : [{fieldName : string,placeholder : string , label : string , fieldType : string , required : boolean},options : [string]]}`;
     setLoading(true);
     const result = await AIChatSession.sendMessage(prompt);
     if (result.response.text()) {

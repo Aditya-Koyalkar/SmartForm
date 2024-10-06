@@ -10,24 +10,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import React from "react";
-import { FieldEdit } from "./FieldEdit";
+import React, { useState } from "react";
 
-export const FormUI = ({
+export const LiveFormUI = ({
   jsonForm,
   selectedTheme,
   borderStyle,
-  onFieldUpdate,
-  onDelete,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
   borderStyle: string;
-  onFieldUpdate: (label: string, placeholder: string, index: number) => void;
-  onDelete: (index: number) => void;
 }) => {
+  const [formData, setFormData] = useState<any>();
+
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const onFormSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(formData);
+  };
   return (
-    <div
+    <form
+      onSubmit={onFormSubmit}
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
@@ -47,13 +57,6 @@ export const FormUI = ({
                   >
                     {field.label}
                   </Label>
-                  <FieldEdit
-                    defaultValue={field}
-                    onUpdate={(label, placeholder) => {
-                      onFieldUpdate(label, placeholder, index);
-                    }}
-                    onDelete={() => onDelete(index)}
-                  />
                 </div>
                 <Select>
                   <SelectTrigger>
@@ -77,13 +80,6 @@ export const FormUI = ({
                   >
                     {field.label}
                   </Label>
-                  <FieldEdit
-                    defaultValue={field}
-                    onUpdate={(label, placeholder) => {
-                      onFieldUpdate(label, placeholder, index);
-                    }}
-                    onDelete={() => onDelete(index)}
-                  />
                 </div>
                 <RadioGroup defaultValue="option-one">
                   {field.options.map((option, index) => (
@@ -103,13 +99,6 @@ export const FormUI = ({
                   >
                     {field.label}
                   </Label>
-                  <FieldEdit
-                    defaultValue={field}
-                    onUpdate={(label, placeholder) => {
-                      onFieldUpdate(label, placeholder, index);
-                    }}
-                    onDelete={() => onDelete(index)}
-                  />
                 </div>
                 <div className="grid grid-cols-2  md:grid-cols-3 gap-2 ">
                   {field.options.map((option, index) => (
@@ -129,15 +118,9 @@ export const FormUI = ({
                   >
                     {field.label}
                   </Label>
-                  <FieldEdit
-                    defaultValue={field}
-                    onUpdate={(label, placeholder) => {
-                      onFieldUpdate(label, placeholder, index);
-                    }}
-                    onDelete={() => onDelete(index)}
-                  />
                 </div>
                 <Input
+                  onChange={handleInputChange}
                   placeholder={field.placeholder}
                   type={field.fieldType}
                   name={field.fieldName}
@@ -148,9 +131,11 @@ export const FormUI = ({
         ))}
       </div>
       <div className="flex justify-center my-2 mt-6">
-        <button className="btn btn-primary">Submit</button>
+        <button className="btn btn-primary" type="submit">
+          Submit
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

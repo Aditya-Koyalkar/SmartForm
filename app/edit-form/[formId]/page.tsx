@@ -1,7 +1,7 @@
 "use client";
 import { Spinner } from "@/app/_components/Spinner";
 import { GetMyForm } from "@/app/actions/GetMyForm";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Share2, SquareArrowUpRight } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,6 +11,8 @@ import { toast } from "sonner";
 import { Controller } from "./_components/Controller";
 import { ChangeThemeDB } from "@/app/actions/ChangeTheme";
 import { ChangeBorderStyleDB } from "@/app/actions/UpdateStyle";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function EditForm({ params }: { params: any }) {
   const formId = params.formId;
@@ -20,7 +22,7 @@ export default function EditForm({ params }: { params: any }) {
     formSubHeading: "",
     formFields: [
       {
-        firstName: "",
+        fieldName: "",
         placeholder: "",
         label: "",
         fieldType: "",
@@ -95,11 +97,26 @@ export default function EditForm({ params }: { params: any }) {
   };
   return (
     <div className="p-10">
-      <div
-        onClick={() => router.back()}
-        className="flex gap-2 items-center my-5 cursor-pointer hover:text-primary lg:text-xl transition-all font-bold"
-      >
-        <ArrowLeft /> Back
+      <div className="flex items-center mb-3 justify-between">
+        <div
+          onClick={() => router.back()}
+          className="flex gap-2 items-center my-5 cursor-pointer hover:text-primary lg:text-xl transition-all font-bold"
+        >
+          <ArrowLeft /> Back
+        </div>
+
+        <div className="flex gap-5">
+          <Link href={`/live-ai-form/${formId}`} target="_blank">
+            {" "}
+            <Button className="flex gap-2">
+              <SquareArrowUpRight className="h-5 w-5" />
+              Live Preview
+            </Button>
+          </Link>
+          <Button className="flex gap-2">
+            <Share2 className="h-5 w-5" /> Share
+          </Button>
+        </div>
       </div>
       <div className="flex justify-center">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">

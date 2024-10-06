@@ -27,7 +27,7 @@ export const FieldEdit = ({
   onDelete,
 }: {
   defaultValue: {
-    firstName: string;
+    fieldName: string;
     placeholder: string;
     label: string;
     fieldType: string;
