@@ -15,15 +15,20 @@ import { FieldEdit } from "./FieldEdit";
 
 export const FormUI = ({
   jsonForm,
+  selectedTheme,
   onFieldUpdate,
   onDelete,
 }: {
   jsonForm: JSONForm;
+  selectedTheme: string;
   onFieldUpdate: (label: string, placeholder: string, index: number) => void;
   onDelete: (index: number) => void;
 }) => {
   return (
-    <div className="md:w-[600px] border rounded-xl p-6">
+    <div
+      className="md:w-[600px] border rounded-xl p-6"
+      data-theme={selectedTheme}
+    >
       <div className="font-bold text-center text-xl">{jsonForm.formTitle}</div>
       <div className="text-sm text-gray-400 text-center">
         {jsonForm.formSubHeading}
@@ -139,6 +144,9 @@ export const FormUI = ({
             )}
           </div>
         ))}
+      </div>
+      <div className="flex justify-center my-2 mt-6">
+        <button className="btn btn-primary">Submit</button>
       </div>
     </div>
   );

@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { FormUI, JSONForm } from "./_components/FormUi";
 import { UpdateFormDB } from "@/app/actions/UpdateForm";
 import { toast } from "sonner";
+import { Controller } from "./_components/Controller";
+import { ChangeThemeDB } from "@/app/actions/ChangeTheme";
 
 export default function EditForm({ params }: { params: any }) {
   const formId = params.formId;
@@ -27,12 +29,14 @@ export default function EditForm({ params }: { params: any }) {
     ],
   });
   const [updateTrigger, setUpdateTrigger] = useState<number>();
+  const [selectedTheme, setSelectedTheme] = useState("light");
   const router = useRouter();
 
   useEffect(() => {
     const getMyForm = async () => {
       const res = await GetMyForm(formId);
       setJsonForm(JSON.parse(res?.jsonform as string));
+      setSelectedTheme(res?.theme as string);
     };
     getMyForm();
   }, [formId, user]);
@@ -76,6 +80,12 @@ export default function EditForm({ params }: { params: any }) {
   if (user.status == "loading") {
     return <Spinner />;
   }
+
+  const handleChangeTheme = async (theme: string) => {
+    setSelectedTheme(theme);
+    await ChangeThemeDB(theme, formId, user.data?.user?.email as string);
+  };
+
   return (
     <div className="p-10">
       <div
@@ -86,12 +96,15 @@ export default function EditForm({ params }: { params: any }) {
       </div>
       <div className="flex justify-center">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <div className="p-5  md:w-[400px] border rounded-lg">Controller</div>
+          <div className="p-5  md:w-[400px] border rounded-lg h-full">
+            <Controller handleChangeTheme={handleChangeTheme} />
+          </div>
           <div className="col-span-2 flex  rounded-xl   w-full h-full">
             <FormUI
               jsonForm={jsonForm}
               onFieldUpdate={onFieldUpdate}
               onDelete={onDeleteField}
+              selectedTheme={selectedTheme}
             />
           </div>
         </div>

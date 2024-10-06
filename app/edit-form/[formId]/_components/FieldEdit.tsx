@@ -75,8 +75,8 @@ export const FieldEdit = ({
       </Popover>{" "}
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">
-            <Trash className="h-5 w-5 text-red-600 cursor-pointer" />
+          <Button variant="outline" className="bg-transparent border-none">
+            <Trash className="h-5 w-5 text-red-600 cursor-pointer bg-transparent" />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
