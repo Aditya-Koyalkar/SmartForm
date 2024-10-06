@@ -30,11 +30,42 @@ export const LiveFormUI = ({
       [name]: value,
     });
   };
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleCheckboxChange = (
+    option: string,
+    fieldName: string,
+    value: any
+  ) => {
+    const list = formData?.[fieldName] ? formData?.[fieldName] : [];
+    if (value) {
+      list.push({
+        option: option,
+        value: value,
+      });
+      setFormData({
+        ...formData,
+        [fieldName]: list,
+      });
+    } else {
+      const result = list.filter((item: any) => item.option != option);
+      setFormData({
+        ...formData,
+        [fieldName]: result,
+      });
+    }
+  };
 
   const onFormSubmit = (e: any) => {
     e.preventDefault();
     console.log(formData);
   };
+
   return (
     <form
       onSubmit={onFormSubmit}
@@ -58,7 +89,12 @@ export const LiveFormUI = ({
                     {field.label}
                   </Label>
                 </div>
-                <Select required={field.required}>
+                <Select
+                  required={field.required}
+                  onValueChange={(value) =>
+                    handleSelectChange(field.fieldName, value)
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder={field.placeholder} />
                   </SelectTrigger>
@@ -84,7 +120,13 @@ export const LiveFormUI = ({
                 <RadioGroup defaultValue="option-one">
                   {field.options.map((option, index) => (
                     <div key={index} className="flex items-center space-x-2">
-                      <RadioGroupItem value={option} id={option} />
+                      <RadioGroupItem
+                        onClick={() =>
+                          handleSelectChange(field.fieldName, option)
+                        }
+                        value={option}
+                        id={option}
+                      />
                       <Label htmlFor="">{option}</Label>
                     </div>
                   ))}
@@ -103,7 +145,11 @@ export const LiveFormUI = ({
                 <div className="grid grid-cols-2  md:grid-cols-3 gap-2 ">
                   {field.options.map((option, index) => (
                     <div key={index} className="flex items-center gap-2">
-                      <Checkbox />
+                      <Checkbox
+                        onCheckedChange={(value) => {
+                          handleCheckboxChange(option, field.fieldName, value);
+                        }}
+                      />
                       <Label>{option}</Label>
                     </div>
                   ))}
