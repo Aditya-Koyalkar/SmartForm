@@ -16,17 +16,19 @@ import { FieldEdit } from "./FieldEdit";
 export const FormUI = ({
   jsonForm,
   selectedTheme,
+  borderStyle,
   onFieldUpdate,
   onDelete,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
+  borderStyle: string;
   onFieldUpdate: (label: string, placeholder: string, index: number) => void;
   onDelete: (index: number) => void;
 }) => {
   return (
     <div
-      className="md:w-[600px] border rounded-xl p-6"
+      className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
       <div className="font-bold text-center text-xl">{jsonForm.formTitle}</div>

@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -8,12 +9,26 @@ import {
 } from "@/components/ui/select";
 import { Themes } from "../../_data/Theme";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const Controller = ({
   handleChangeTheme,
+  handleBorderChange,
+  borderStyle,
 }: {
   handleChangeTheme: (value: string) => void;
+  handleBorderChange: (value: string) => void;
+  borderStyle: string;
 }) => {
+  const [borderChecked, setBorderChecked] = useState<boolean>();
+  const toggleBorder = () => {
+    setBorderChecked(!borderChecked);
+    handleBorderChange(!borderChecked ? "border-2 border-primary" : "");
+  };
+  useEffect(() => {
+    setBorderChecked(!!borderStyle);
+  }, [borderStyle]);
+
   return (
     <div>
       <Label className="font-semibold text-lg">Select Theme</Label>
@@ -35,6 +50,14 @@ export const Controller = ({
           ))}
         </SelectContent>
       </Select>
+
+      <div className="mt-3">
+        <Label className="text-lg font-semibold">Styles</Label>
+        <div className="mt-4 flex items-center gap-3">
+          <Checkbox checked={borderChecked} onCheckedChange={toggleBorder} />
+          <div>Border </div>
+        </div>
+      </div>
     </div>
   );
 };

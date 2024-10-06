@@ -27,6 +27,7 @@ model Form {
   id String @id @default(cuid())
   jsonform String 
   theme String @default("light")
+  borderStyle String @default("")
   createdBy String
   createdAt String 
   user User @relation(fields: [createdBy],references: [email])
