@@ -25,6 +25,7 @@ export default function LiveAIForm({ params }: { params: any }) {
   });
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [borderStyle, setBorderStyle] = useState("");
+
   useEffect(() => {
     const fetchMyForm = async () => {
       const res = await GetMyForm(formId);
@@ -39,6 +40,7 @@ export default function LiveAIForm({ params }: { params: any }) {
     <div className="px-5 py-10 flex flex-col justify-center">
       <div className="flex justify-center">
         <LiveFormUI
+          formId={formId}
           jsonForm={jsonForm as JSONForm}
           selectedTheme={selectedTheme}
           borderStyle={borderStyle}

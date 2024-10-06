@@ -31,4 +31,13 @@ model Form {
   createdBy String
   createdAt String 
   user User @relation(fields: [createdBy],references: [email])
+  responses FormResponses[]
+}
+
+model FormResponses {
+  id String @id @default(cuid())
+  jsonUserResponse String
+  formId String
+  createdAt String
+  Form Form @relation(fields: [formId],references: [id])
 }

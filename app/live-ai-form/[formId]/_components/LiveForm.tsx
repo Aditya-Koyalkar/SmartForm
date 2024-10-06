@@ -1,3 +1,4 @@
+import { CreateFormResponse } from "@/app/actions/CreateFormResponse";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,19 +11,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { toast } from "sonner";
 
 export const LiveFormUI = ({
   jsonForm,
   selectedTheme,
   borderStyle,
+  formId,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
   borderStyle: string;
+  formId: string;
 }) => {
   const [formData, setFormData] = useState<any>();
-
+  let formRef = useRef<HTMLFormElement>(null);
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -61,13 +65,17 @@ export const LiveFormUI = ({
     }
   };
 
-  const onFormSubmit = (e: any) => {
+  const onFormSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(formData);
+    const result = await CreateFormResponse(JSON.stringify(formData), formId);
+    console.log(result);
+    toast("Response Submitted SuccessFully");
+    formRef.current?.reset();
   };
 
   return (
     <form
+      ref={formRef}
       onSubmit={onFormSubmit}
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
