@@ -58,7 +58,7 @@ export const LiveFormUI = ({
                     {field.label}
                   </Label>
                 </div>
-                <Select>
+                <Select required={field.required}>
                   <SelectTrigger>
                     <SelectValue placeholder={field.placeholder} />
                   </SelectTrigger>
@@ -124,6 +124,7 @@ export const LiveFormUI = ({
                   placeholder={field.placeholder}
                   type={field.fieldType}
                   name={field.fieldName}
+                  required={field.required}
                 />
               </div>
             )}
