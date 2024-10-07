@@ -29,6 +29,7 @@ export const LiveFormUI = ({
   formId: string;
   authEnabled: boolean;
 }) => {
+  //@ts-ignore
   const [formData, setFormData] = useState<any>();
   let formRef = useRef<HTMLFormElement>(null);
   const user = useSession();
@@ -43,7 +44,7 @@ export const LiveFormUI = ({
     );
     setCanSubmit(submitted as boolean);
   };
-
+  //@ts-ignore
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -61,6 +62,7 @@ export const LiveFormUI = ({
   const handleCheckboxChange = (
     option: string,
     fieldName: string,
+    //@ts-ignore
     value: any
   ) => {
     const list = formData?.[fieldName] ? formData?.[fieldName] : [];
@@ -74,6 +76,7 @@ export const LiveFormUI = ({
         [fieldName]: list,
       });
     } else {
+      //@ts-ignore
       const result = list.filter((item: any) => item.option != option);
       setFormData({
         ...formData,
@@ -81,7 +84,7 @@ export const LiveFormUI = ({
       });
     }
   };
-
+  //@ts-ignore
   const onFormSubmit = async (e: any) => {
     e.preventDefault();
     const submittedBy = authEnabled ? user.data?.user?.email : "";

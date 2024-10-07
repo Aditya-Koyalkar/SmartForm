@@ -10,6 +10,7 @@ export const authOptions = {
   ],
   secret: process.env.NEXT_AUTH_JWT_SECRET || "secret",
   callbacks: {
+    //@ts-ignore
     async signIn({ user, account }: any) {
       if (account.provider === "google") {
         const existingUser = await db.user.findUnique({
@@ -27,6 +28,7 @@ export const authOptions = {
       }
       return true;
     },
+    //@ts-ignore
     async session({ token, session }: any) {
       session.user.id = token.sub;
       return session;

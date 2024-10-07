@@ -38,7 +38,8 @@ export const FormDataItem = ({
       form.id,
       user.data?.user?.email as string
     );
-    toast("Form Deleted Successfully");
+
+    toast("Form Deleted Successfully" + response?.id);
     refetchData();
   };
   return (

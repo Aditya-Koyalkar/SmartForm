@@ -15,7 +15,7 @@ import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import { useState } from "react";
 import { CreateFormAction } from "@/app/actions/CreateForm";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const CreateForm = () => {
   const [open, setOpen] = useState<boolean>(false);

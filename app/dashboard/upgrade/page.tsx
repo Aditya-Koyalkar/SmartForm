@@ -9,7 +9,10 @@ export default function Upgrade() {
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
           {PricingPlan.map((pricing, index) => (
-            <div className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12">
+            <div
+              key={index}
+              className="rounded-2xl border border-gray-200 p-6 shadow-sm sm:px-8 lg:p-12"
+            >
               <div className="text-center">
                 <h2 className="text-lg font-medium text-gray-900">
                   {pricing.duration}

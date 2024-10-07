@@ -7,7 +7,7 @@ import { LiveFormUI } from "./_components/LiveForm";
 import Link from "next/link";
 import { MdOutlineFormatAlignLeft } from "react-icons/md";
 
-export default function LiveAIForm({ params }: { params: any }) {
+export default function LiveAIForm({ params }: { params: { formId: string } }) {
   const { formId } = params;
   const [jsonForm, setJsonForm] = useState<JSONForm>({
     formTitle: "",

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { signIn, useSession } from "next-auth/react";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";

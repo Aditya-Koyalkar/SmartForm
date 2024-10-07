@@ -6,7 +6,7 @@ import { CreateForm } from "./_components/CreateForm";
 import { FormList } from "./_components/FromList";
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   if (status == "loading") {
     return <Spinner />;

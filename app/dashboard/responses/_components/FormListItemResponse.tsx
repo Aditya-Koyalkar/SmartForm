@@ -9,6 +9,7 @@ import * as XLSX from "xlsx";
 
 export const FormListItemResponse = ({ form }: { form: Form }) => {
   const jsonForm = JSON.parse(form.jsonform);
+  //@ts-ignore
   const [formResponses, setFormResponses] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const user = useSession();
@@ -27,8 +28,10 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
 
   const handleExportData = async () => {
     setLoading(true);
-    let jsonData: any = [];
+    //@ts-ignore
+    const jsonData: any = [];
     if (formResponses) {
+      //@ts-ignore
       formResponses.forEach((item: any) => {
         const jsonItem = JSON.parse(item.jsonUserResponse);
         jsonData.push(jsonItem);
@@ -39,6 +42,8 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
     setLoading(false);
     exportToExcel(jsonData);
   };
+
+  //@ts-ignore
   const exportToExcel = (jsonDataResponses: any) => {
     const worksheet = XLSX.utils.json_to_sheet(jsonDataResponses);
     const workbook = XLSX.utils.book_new();

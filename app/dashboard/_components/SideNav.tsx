@@ -14,7 +14,7 @@ export const SideNav = () => {
   const [formList, setFormList] = useState<Form[]>([]);
   const user = useSession();
   useEffect(() => {
-    user.data && fetchUserForms();
+    if (user.data) fetchUserForms();
   }, [user]);
   const fetchUserForms = async () => {
     const forms = await GetAllUserForms(user.data?.user?.email as string);

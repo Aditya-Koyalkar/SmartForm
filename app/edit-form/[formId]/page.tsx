@@ -16,7 +16,7 @@ import Link from "next/link";
 import { RWebShare } from "react-web-share";
 import { ChangeEnableAuthForm } from "@/app/actions/ChangeEnableAuthForm";
 
-export default function EditForm({ params }: { params: any }) {
+export default function EditForm({ params }: { params: { formId: string } }) {
   const formId = params.formId;
   const user = useSession();
   const [jsonForm, setJsonForm] = useState<JSONForm>({
@@ -57,7 +57,7 @@ export default function EditForm({ params }: { params: any }) {
     }
   }, [updateTrigger]);
   const updateJsonDB = async () => {
-    const result = await UpdateFormDB(
+    await UpdateFormDB(
       JSON.stringify(jsonForm),
       formId,
       user.data?.user?.email as string
