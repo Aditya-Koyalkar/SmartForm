@@ -42,7 +42,6 @@ export const LiveFormUI = ({
       user.data?.user?.email as string
     );
     setCanSubmit(submitted as boolean);
-    console.log(submitted);
   };
 
   const handleInputChange = (e: any) => {
@@ -85,13 +84,12 @@ export const LiveFormUI = ({
 
   const onFormSubmit = async (e: any) => {
     e.preventDefault();
-    const submittedBy = authEnabled ? user.data?.user?.email : "unknown";
+    const submittedBy = authEnabled ? user.data?.user?.email : "";
     const result = await CreateFormResponse(
       JSON.stringify(formData),
       formId,
       submittedBy as string
     );
-    console.log(result);
     toast("Response Submitted SuccessFully");
     formRef.current?.reset();
     fetchUserSubmitted();
@@ -219,7 +217,15 @@ export const LiveFormUI = ({
       </div>
       <div className="flex justify-center my-2 mt-6">
         {authEnabled && user.status == "unauthenticated" ? (
-          <button className="btn btn-primary" onClick={() => signIn()}>
+          <button
+            className="btn btn-primary"
+            onClick={() =>
+              signIn(undefined, {
+                callbackUrl:
+                  process.env.NEXT_PUBLIC_BASE_URL + "/live-ai-form/" + formId,
+              })
+            }
+          >
             Sign In to Submit the form
           </button>
         ) : (
