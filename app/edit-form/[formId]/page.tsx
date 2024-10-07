@@ -13,6 +13,7 @@ import { ChangeThemeDB } from "@/app/actions/ChangeTheme";
 import { ChangeBorderStyleDB } from "@/app/actions/UpdateStyle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { RWebShare } from "react-web-share";
 
 export default function EditForm({ params }: { params: any }) {
   const formId = params.formId;
@@ -113,9 +114,23 @@ export default function EditForm({ params }: { params: any }) {
               Live Preview
             </Button>
           </Link>
-          <Button className="flex gap-2">
-            <Share2 className="h-5 w-5" /> Share
-          </Button>
+          <RWebShare
+            data={{
+              text: `${jsonForm.formSubHeading} : Built with SmartFormAI !`,
+              url: `${process.env.NEXT_PUBLIC_BASE_URL}/live-ai-form/${formId}`,
+              title: `${jsonForm.formTitle}`,
+            }}
+            onClick={() => console.log("shared successfully!")}
+          >
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              className="flex items-center gap-2"
+            >
+              <Share2 className="h-5 w-5" />
+              Share
+            </Button>
+          </RWebShare>
         </div>
       </div>
       <div className="flex justify-center">

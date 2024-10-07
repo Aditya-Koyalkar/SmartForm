@@ -16,6 +16,7 @@ import {
 import { DeleteMyForm } from "@/app/actions/DeleteMyForm";
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
+import { RWebShare } from "react-web-share";
 
 export const FormDataItem = ({
   form,
@@ -70,13 +71,24 @@ export const FormDataItem = ({
       <div className="text-sm text-slate-600">{jsonForm.formSubHeading}</div>
       <hr className="my-4" />
       <div className="flex justify-between">
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          className="flex items-center gap-2"
+        <RWebShare
+          data={{
+            text: `${jsonForm.formSubHeading} : Built with SmartFormAI !`,
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}/live-ai-form/${form.id}`,
+            title: `${jsonForm.formTitle}`,
+          }}
+          onClick={() => console.log("shared successfully!")}
         >
-          <Share2 className="h-5 w-5" /> Share
-        </Button>
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            className="flex items-center gap-2"
+          >
+            <Share2 className="h-5 w-5" />
+            Share
+          </Button>
+        </RWebShare>
+
         <Link href={`/edit-form/${form.id}`}>
           <Button size={"sm"} className="flex items-center gap-2">
             <Edit className="h-5 w-5" /> Edit
