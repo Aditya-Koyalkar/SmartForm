@@ -1,3 +1,4 @@
+import { CheckUserSubmitted } from "@/app/actions/CheckUserSubmitted";
 import { CreateFormResponse } from "@/app/actions/CreateFormResponse";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -31,6 +32,18 @@ export const LiveFormUI = ({
   const [formData, setFormData] = useState<any>();
   let formRef = useRef<HTMLFormElement>(null);
   const user = useSession();
+  const [canSubmit, setCanSubmit] = useState<boolean>(true);
+  useEffect(() => {
+    authEnabled && fetchUserSubmitted();
+  }, [authEnabled]);
+
+  const fetchUserSubmitted = async () => {
+    const submitted = await CheckUserSubmitted(
+      user.data?.user?.email as string
+    );
+    setCanSubmit(submitted as boolean);
+    console.log(submitted);
+  };
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -72,11 +85,25 @@ export const LiveFormUI = ({
 
   const onFormSubmit = async (e: any) => {
     e.preventDefault();
-    const result = await CreateFormResponse(JSON.stringify(formData), formId);
+    const submittedBy = authEnabled ? user.data?.user?.email : "unknown";
+    const result = await CreateFormResponse(
+      JSON.stringify(formData),
+      formId,
+      submittedBy as string
+    );
     console.log(result);
     toast("Response Submitted SuccessFully");
     formRef.current?.reset();
+    fetchUserSubmitted();
   };
+
+  if (!canSubmit) {
+    return (
+      <div className="h-[80px] w-full shadow-lg text-center">
+        your response is already received . Thank you!
+      </div>
+    );
+  }
 
   return (
     <form

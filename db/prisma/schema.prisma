@@ -37,6 +37,7 @@ model Form {
 
 model FormResponses {
   id String @id @default(cuid())
+  submittedBy String @default("unknown")
   jsonUserResponse String
   formId String
   createdAt String
