@@ -16,7 +16,7 @@ export const FormList = () => {
     setFormList(forms ? forms : []);
   };
   return (
-    <div className="mt-5 grid grid-cols-2 md:grid-cols-3 gap-5">
+    <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
       {formList.map((form, index: number) => (
         <div key={index}>
           <FormDataItem form={form} refetchData={fetchUserForms} />
