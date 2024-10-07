@@ -1,15 +1,13 @@
 "use client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "@/hooks/use-toast";
+
 import { signIn, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
 import { Spinner } from "../_components/Spinner";
-import { Button } from "@/components/ui/button";
 import { CreateForm } from "./_components/CreateForm";
+import { FormList } from "./_components/FromList";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
+
   if (status == "loading") {
     return <Spinner />;
   }
@@ -22,6 +20,10 @@ export default function Dashboard() {
       <div className="font-bold text-3xl flex items-center justify-between">
         <div>DashBoard</div>
         <CreateForm />
+      </div>
+
+      <div>
+        <FormList />
       </div>
     </div>
   );
