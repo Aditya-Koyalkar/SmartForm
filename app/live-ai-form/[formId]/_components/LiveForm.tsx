@@ -10,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { signIn, useSession } from "next-auth/react";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export const LiveFormUI = ({
@@ -19,14 +20,18 @@ export const LiveFormUI = ({
   selectedTheme,
   borderStyle,
   formId,
+  authEnabled,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
   borderStyle: string;
   formId: string;
+  authEnabled: boolean;
 }) => {
   const [formData, setFormData] = useState<any>();
   let formRef = useRef<HTMLFormElement>(null);
+  const user = useSession();
+
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -186,9 +191,15 @@ export const LiveFormUI = ({
         ))}
       </div>
       <div className="flex justify-center my-2 mt-6">
-        <button className="btn btn-primary" type="submit">
-          Submit
-        </button>
+        {authEnabled && user.status == "unauthenticated" ? (
+          <button className="btn btn-primary" onClick={() => signIn()}>
+            Sign In to Submit the form
+          </button>
+        ) : (
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+        )}
       </div>
     </form>
   );

@@ -25,13 +25,14 @@ export default function LiveAIForm({ params }: { params: any }) {
   });
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [borderStyle, setBorderStyle] = useState("");
-
+  const [authEnabled, setAuthEnabled] = useState<boolean>(false);
   useEffect(() => {
     const fetchMyForm = async () => {
       const res = await GetMyForm(formId);
       setJsonForm(JSON.parse(res?.jsonform as string));
       setSelectedTheme(res?.theme as string);
       setBorderStyle(res?.borderStyle as string);
+      setAuthEnabled(res?.enableAuth as boolean);
     };
     fetchMyForm();
   }, [params]);
@@ -44,6 +45,7 @@ export default function LiveAIForm({ params }: { params: any }) {
           jsonForm={jsonForm as JSONForm}
           selectedTheme={selectedTheme}
           borderStyle={borderStyle}
+          authEnabled={authEnabled}
         />
       </div>
       <Link

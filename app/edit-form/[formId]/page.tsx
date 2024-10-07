@@ -14,6 +14,7 @@ import { ChangeBorderStyleDB } from "@/app/actions/UpdateStyle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RWebShare } from "react-web-share";
+import { ChangeEnableAuthForm } from "@/app/actions/ChangeEnableAuthForm";
 
 export default function EditForm({ params }: { params: any }) {
   const formId = params.formId;
@@ -35,6 +36,7 @@ export default function EditForm({ params }: { params: any }) {
   const [updateTrigger, setUpdateTrigger] = useState<number>();
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [borderStyle, setBorderStyle] = useState("");
+  const [authEnabled, setAuthEnabled] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function EditForm({ params }: { params: any }) {
       setJsonForm(JSON.parse(res?.jsonform as string));
       setSelectedTheme(res?.theme as string);
       setBorderStyle(res?.borderStyle as string);
+      setAuthEnabled(res?.enableAuth as boolean);
     };
     getMyForm();
   }, [formId, user]);
@@ -96,6 +99,11 @@ export default function EditForm({ params }: { params: any }) {
     setBorderStyle(style);
     await ChangeBorderStyleDB(style, formId, user.data?.user?.email as string);
   };
+
+  const handleEnableAuthChange = async (value: boolean) => {
+    await ChangeEnableAuthForm(value, formId, user.data?.user?.email as string);
+    setAuthEnabled(value);
+  };
   return (
     <div className="p-10">
       <div className="flex items-center mb-3 justify-between">
@@ -140,6 +148,8 @@ export default function EditForm({ params }: { params: any }) {
               handleChangeTheme={handleChangeTheme}
               handleBorderChange={handleBorderChange}
               borderStyle={borderStyle}
+              handleEnableAuthChange={handleEnableAuthChange}
+              authEnabled={authEnabled}
             />
           </div>
           <div className="col-span-2 flex  rounded-xl   w-full h-full">

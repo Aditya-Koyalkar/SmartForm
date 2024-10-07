@@ -28,6 +28,7 @@ model Form {
   jsonform String 
   theme String @default("light")
   borderStyle String @default("")
+  enableAuth Boolean @default(false)
   createdBy String
   createdAt String 
   user User @relation(fields: [createdBy],references: [email])
