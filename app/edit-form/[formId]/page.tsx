@@ -105,7 +105,7 @@ export default function EditForm({ params }: { params: { formId: string } }) {
     setAuthEnabled(value);
   };
   return (
-    <div className="p-10">
+    <div className="p-5 md:p-10">
       <div className="flex items-center mb-3 justify-between">
         <div
           onClick={() => router.back()}
@@ -152,7 +152,7 @@ export default function EditForm({ params }: { params: { formId: string } }) {
               authEnabled={authEnabled}
             />
           </div>
-          <div className="col-span-2 flex  rounded-xl   w-full h-full">
+          <div className="col-span-2 flex  rounded-xl justify-center  w-full h-full">
             <FormUI
               jsonForm={jsonForm}
               onFieldUpdate={onFieldUpdate}

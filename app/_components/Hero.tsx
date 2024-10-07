@@ -42,7 +42,7 @@ const Hero = () => {
         How It Works ?
       </div>
       <div className=" flex flex-col md:flex-row gap-5  justify-center  items-center  p-10 md:p-14">
-        <div className=" shadow-lg bg-[#ffff] rounded-xl px-4 py-6 h-[180px] md:w-[800px]">
+        <div className=" shadow-lg bg-[#ffff] rounded-xl px-4 py-6 h-[200px] md:w-[800px]">
           <div className="flex items-center gap-3">
             <MdOutlineFormatAlignLeft className="h-[25px] w-[25px] text-black" />
             <div className=" text-[20px] font-bold">

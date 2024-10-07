@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-10">
-      <div className="font-bold text-3xl flex items-center justify-between">
+      <div className="font-bold text-2xl md:text-3xl flex items-center justify-between">
         <div>DashBoard</div>
         <CreateForm />
       </div>

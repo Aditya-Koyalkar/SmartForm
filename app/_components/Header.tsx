@@ -6,7 +6,10 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/hooks/use-toast";
-import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import {
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,6 +71,34 @@ const Header = () => {
                         Logout
                       </Button>
                     </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <div className="flex md:hidden flex-col p-2 bg-secondary">
+                      <DropdownMenuItem
+                        className={`${
+                          path == "/dashboard" && "bg-primary text-white"
+                        }`}
+                      >
+                        <Link href={"/dashboard"}>My Forms</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        className={`${
+                          path == "/dashboard/responses" &&
+                          "bg-primary text-white"
+                        }`}
+                      >
+                        <Link href={"/dashboard/responses"}>Responses</Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        className={`${
+                          path == "/dashboard/upgrade" &&
+                          "bg-primary text-white"
+                        }`}
+                      >
+                        <Link href={`/dashboard/upgrade`}>Upgrade</Link>
+                      </DropdownMenuItem>
+                    </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
