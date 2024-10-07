@@ -73,8 +73,8 @@ const Header = () => {
               </div>
             ) : (
               <Button
-                onClick={async () => {
-                  await signIn();
+                onClick={() => {
+                  signIn();
                 }}
               >
                 Get Started
