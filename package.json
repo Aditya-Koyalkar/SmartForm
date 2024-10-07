@@ -24,6 +24,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@tabler/icons-react": "^3.17.0",
     "@types/bcrypt": "^5.0.2",
+    "@typescript-eslint/parser": "^8.8.0",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

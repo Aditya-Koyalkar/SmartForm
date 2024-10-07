@@ -6,11 +6,18 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
-
+type Responses =
+  | {
+      id: string;
+      submittedBy: string;
+      jsonUserResponse: string;
+      formId: string;
+      createdAt: string;
+    }[]
+  | undefined;
 export const FormListItemResponse = ({ form }: { form: Form }) => {
   const jsonForm = JSON.parse(form.jsonform);
-  //@ts-ignore
-  const [formResponses, setFormResponses] = useState<any>([]);
+  const [formResponses, setFormResponses] = useState<Responses>([]);
   const [loading, setLoading] = useState(false);
   const user = useSession();
   const fetchFormResponses = async () => {
@@ -28,11 +35,10 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
 
   const handleExportData = async () => {
     setLoading(true);
-    //@ts-ignore
-    const jsonData: any = [];
+
+    const jsonData: Record<string, any>[] = [];
     if (formResponses) {
-      //@ts-ignore
-      formResponses.forEach((item: any) => {
+      formResponses.forEach((item) => {
         const jsonItem = JSON.parse(item.jsonUserResponse);
         jsonData.push(jsonItem);
       });
@@ -43,8 +49,7 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
     exportToExcel(jsonData);
   };
 
-  //@ts-ignore
-  const exportToExcel = (jsonDataResponses: any) => {
+  const exportToExcel = (jsonDataResponses: Record<string, any>[]) => {
     const worksheet = XLSX.utils.json_to_sheet(jsonDataResponses);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");

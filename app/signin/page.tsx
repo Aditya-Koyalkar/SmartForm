@@ -8,7 +8,7 @@ import { Spinner } from "../_components/Spinner";
 import { toast } from "sonner";
 
 export default function SignInPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl: "/" });

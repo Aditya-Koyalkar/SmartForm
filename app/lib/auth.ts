@@ -1,4 +1,6 @@
 import db from "@/db/index";
+import { Account, Session, User } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
@@ -10,27 +12,32 @@ export const authOptions = {
   ],
   secret: process.env.NEXT_AUTH_JWT_SECRET || "secret",
   callbacks: {
-    //@ts-ignore
-    async signIn({ user, account }: any) {
-      if (account.provider === "google") {
+    async signIn({
+      user,
+      account,
+    }: {
+      user: User | null;
+      account: Account | null;
+    }) {
+      if (account?.provider === "google" && user) {
         const existingUser = await db.user.findUnique({
-          where: { email: user.email },
+          where: { email: user.email as string },
         });
         if (!existingUser) {
           await db.user.create({
             data: {
-              email: user.email,
+              email: user.email as string,
               image: user.image,
-              name: user.name,
+              name: user.name as string,
             },
           });
         }
       }
       return true;
     },
-    //@ts-ignore
-    async session({ token, session }: any) {
-      session.user.id = token.sub;
+
+    async session({ token, session }: { token: JWT; session: Session }) {
+      token.name = token.name;
       return session;
     },
   },
