@@ -6,13 +6,17 @@ import { CreateForm } from "./_components/CreateForm";
 import { FormList } from "./_components/FromList";
 
 export default function Dashboard() {
-  const { status } = useSession();
+  const { status, data } = useSession();
 
   if (status == "loading") {
     return <Spinner />;
   }
   if (status == "unauthenticated") {
-    signIn();
+    return signIn();
+  }
+
+  if (status == "authenticated") {
+    localStorage.setItem("userInfo", JSON.stringify(data.user));
   }
 
   return (

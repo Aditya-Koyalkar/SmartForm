@@ -21,14 +21,9 @@ export const CreateForm = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const data = useSession();
+  const user = JSON.parse(localStorage.getItem("userInfo") || "");
   const router = useRouter();
-  if (data.status == "unauthenticated") {
-    signIn();
-  }
-  if (data.status == "loading") {
-    return <Spinner />;
-  }
+
   const onCreateForm = async () => {
     const prompt = `Description: ${userInput} , On the basis of the given description please give form in json format with form title , form subheading and formFields which have fieldName , placeholder,label,fieldType except file,required ,options if it is a select type or radio or checkbox type else empty []  and provide in the format , for radio {formTitle : string,formSubHeading : string , formFields : [{fieldName : string,placeholder : string , label : string , fieldType : string , required : boolean},options : [string]]}`;
     setLoading(true);
@@ -36,7 +31,7 @@ export const CreateForm = () => {
     if (result.response.text()) {
       const res = await CreateFormAction(
         result.response.text(),
-        data.data?.user?.email as string
+        user?.email as string
       );
       setLoading(false);
       setOpen(false);

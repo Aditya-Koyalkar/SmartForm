@@ -48,7 +48,7 @@ export default function EditForm({ params }: { params: { formId: string } }) {
       setAuthEnabled(res?.enableAuth as boolean);
     };
     getMyForm();
-  }, [formId, user]);
+  }, [formId]);
 
   useEffect(() => {
     if (updateTrigger) {

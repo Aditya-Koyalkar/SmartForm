@@ -8,7 +8,7 @@ import { FormListItemResponse } from "./_components/FormListItemResponse";
 
 export default function Responses() {
   const [formList, setFormList] = useState<Form[]>([]);
-  const user = useSession();
+  const user = JSON.parse(localStorage.getItem("userInfo") || "");
   useEffect(() => {
     fetchUserForms();
   }, [user]);

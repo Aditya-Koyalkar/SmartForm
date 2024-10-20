@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import { FormDataItem } from "./FormDataItem";
 
 export const FormList = () => {
-  const { data: session } = useSession();
+  const user = JSON.parse(localStorage.getItem("userInfo") || "");
   const [formList, setFormList] = useState<Form[]>([]);
 
   useEffect(() => {
     fetchUserForms();
-  }, [session]);
+  }, []);
   const fetchUserForms = async () => {
-    const forms = await GetAllUserForms(session?.user?.email as string);
+    const forms = await GetAllUserForms(user?.email as string);
     setFormList(forms ? forms : []);
   };
   return (

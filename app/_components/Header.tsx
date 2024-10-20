@@ -18,7 +18,9 @@ import { usePathname } from "next/navigation";
 const Header = () => {
   const user = useSession();
   const path = usePathname();
-
+  if (user.status == "authenticated") {
+    localStorage.setItem("userInfo", JSON.stringify(user.data.user));
+  }
   return (
     !path.includes("live-ai-form") && (
       <div className="p-5 shadow-md border">
