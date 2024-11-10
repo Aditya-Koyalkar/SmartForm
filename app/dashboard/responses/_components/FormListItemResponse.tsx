@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
+import Link from "next/link";
 type Responses =
   | {
       id: string;
@@ -56,7 +57,10 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
     XLSX.writeFile(workbook, `${jsonForm.formTitle}.xlsx`);
   };
   return (
-    <div className="border shadow-md rounded-lg p-4">
+    <Link
+      href={`/dashboard/responses/${form.id}`}
+      className="border shadow-md rounded-lg p-4 cursor-pointer"
+    >
       <div className="flex justify-between items-center">
         <div>{form.createdAt}</div>
       </div>
@@ -78,6 +82,6 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
           Export
         </Button>
       </div>
-    </div>
+    </Link>
   );
 };
