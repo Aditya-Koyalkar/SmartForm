@@ -22,6 +22,7 @@ export async function CreateUser(userId: string, email: string, name: string) {
     });
     return newUser;
   } catch (e) {
+    console.log(e);
     throw new Error("some thing went wrong while creating user");
   }
 }

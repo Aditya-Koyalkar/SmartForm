@@ -1,16 +1,15 @@
 "use client";
-import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { LibraryBig, LineChart, MessageSquare, Shield } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "./FromList";
 
 export const SideNav = () => {
   const path = usePathname();
-  const [formList, setFormList] = useState<Form[]>([]);
+  // const [formList, setFormList] = useState<Form[]>([]);
 
   const menuList = [
     {
@@ -57,7 +56,7 @@ export const SideNav = () => {
       </div>
       <div className="fixed bottom-10 p-6 w-64">
         <Button className="w-full">+ Create Form</Button>
-        <div className="my-7">
+        {/* <div className="my-7">
           <Progress
             value={33 * formList.length < 100 ? 33 * formList.length : 100}
           />
@@ -67,7 +66,7 @@ export const SideNav = () => {
           <div className="text-sm mt-2 text-gray-600">
             Upgrade your plan for unlimited AI forms
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

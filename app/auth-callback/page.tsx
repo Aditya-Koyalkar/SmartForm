@@ -1,12 +1,11 @@
 "use client";
-import { SignIn, useAuth, useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { CreateUser } from "../actions/CreateUser";
-import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-const page = () => {
+const Page = () => {
   const { userId } = useAuth();
   const router = useRouter();
   const user = useUser();
@@ -40,4 +39,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
