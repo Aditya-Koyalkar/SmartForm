@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
 import Link from "next/link";
+import { exportToExcel } from "./exportToExcel";
 type Responses =
   | {
       id: string;
@@ -49,15 +50,9 @@ export const FormListItemResponse = ({
       toast("No Responses");
     }
     setLoading(false);
-    exportToExcel(jsonData);
+    exportToExcel(jsonData, jsonForm.formTitle);
   };
 
-  const exportToExcel = (jsonDataResponses: Record<string, any>[]) => {
-    const worksheet = XLSX.utils.json_to_sheet(jsonDataResponses);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    XLSX.writeFile(workbook, `${jsonForm.formTitle}.xlsx`);
-  };
   return (
     <Link
       href={`/dashboard/responses/${form.id}`}
