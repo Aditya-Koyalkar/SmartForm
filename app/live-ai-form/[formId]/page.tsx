@@ -35,7 +35,7 @@ export default function LiveAIForm({ params }: { params: { formId: string } }) {
       setAuthEnabled(res?.enableAuth as boolean);
     };
     fetchMyForm();
-  }, [params]);
+  }, [params, formId]);
 
   return (
     <div className="px-5 py-10 flex flex-col justify-center">

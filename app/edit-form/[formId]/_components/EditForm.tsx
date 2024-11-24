@@ -1,5 +1,4 @@
 "use client";
-import { Spinner } from "@/app/_components/Spinner";
 import { GetMyForm } from "@/app/actions/GetMyForm";
 import { ArrowLeft, Share2, SquareArrowUpRight } from "lucide-react";
 import { useRouter } from "next/navigation";

@@ -13,5 +13,5 @@ export default async function EditFormPage({
     return <div>un auth</div>;
   }
   const currentUser = await GetCurrentUser();
-  return <EditForm email={currentUser?.email!} formId={formId} />;
+  return <EditForm email={currentUser?.email as string} formId={formId} />;
 }

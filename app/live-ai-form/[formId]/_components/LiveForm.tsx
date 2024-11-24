@@ -32,7 +32,6 @@ export const LiveFormUI = ({
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const formRef = useRef<HTMLFormElement>(null);
-  const { userId } = useAuth();
   const user = useUser();
   const [canSubmit, setCanSubmit] = useState<boolean>(true);
   useEffect(() => {
