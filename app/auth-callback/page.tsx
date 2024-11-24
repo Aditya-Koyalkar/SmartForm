@@ -1,11 +1,11 @@
 "use client";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { CreateUser } from "../actions/CreateUser";
 import { Loader2 } from "lucide-react";
 
-const Page = () => {
+const AuthCallback = () => {
   const { userId } = useAuth();
   const router = useRouter();
   const user = useUser();
@@ -36,6 +36,19 @@ const Page = () => {
         <Loader2 className="w-5 h-5 animate-spin" />
       </div>
     </div>
+  );
+};
+const Page = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full h-screen flex items-center justify-center">
+          <Loader2 className="w-5 h-5 animate-spin" />
+        </div>
+      }
+    >
+      <AuthCallback />
+    </Suspense>
   );
 };
 
