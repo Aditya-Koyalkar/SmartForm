@@ -1,27 +1,34 @@
-"use client";
-
+import { GetCurrentUser } from "@/app/actions/GetCurrentUser";
 import { GetFormResponses } from "@/app/actions/GetFormResponses";
-import { GetMyForm } from "@/app/actions/GetMyForm";
-import { useEffect, useState } from "react";
+import { auth } from "@clerk/nextjs/server";
+import { ImSad } from "react-icons/im";
 
-type FormResponseType = {
-  id: string;
-  submittedBy: string;
-  jsonUserResponse: string;
-  formId: string;
-  createdAt: string;
-};
-
-export default function FormResponse({ params }: { params: { id: string } }) {
+export default async function FormResponse({
+  params,
+}: {
+  params: { id: string };
+}) {
   const formId = params.id;
-  const user = JSON.parse(localStorage.getItem("userInfo") || "");
-  const [responses, setResponses] = useState<FormResponseType[]>();
-  useEffect(() => {
-    fetchFormResponses();
-  }, [formId]);
-  const fetchFormResponses = async () => {
-    const result = await GetFormResponses(formId, user.email);
-    setResponses(result);
-  };
-  return <div>{}</div>;
+  const { userId } = await auth();
+  if (!userId) {
+    return <div>not auth</div>;
+  }
+  const user = await GetCurrentUser();
+  if (!user) {
+    return <div>not auth</div>;
+  }
+  const responses = await GetFormResponses(formId, user?.email);
+  if (!responses) {
+    return;
+  }
+  if (responses.length == 0) {
+    return (
+      <div className="w-full flex justify-center items-center">
+        <div className="flex mt-32 gap-3 items-center text-primary text-xl">
+          No responses yet <ImSad className="w-8 h-8" />
+        </div>
+      </div>
+    );
+  }
+  return <div></div>;
 }

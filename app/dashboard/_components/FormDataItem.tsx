@@ -14,33 +14,24 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { DeleteMyForm } from "@/app/actions/DeleteMyForm";
-import { signIn, useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { RWebShare } from "react-web-share";
 
 export const FormDataItem = ({
   form,
-  refetchData,
+  email,
+  fetchUserForms,
 }: {
   form: Form;
-  refetchData: () => void;
+  email: string;
+  fetchUserForms: () => void;
 }) => {
   const jsonForm = JSON.parse(form.jsonform);
-  const user = useSession();
-  if (user.status == "loading") {
-    return <>Loading</>;
-  }
-  if (user.status == "unauthenticated") {
-    signIn();
-  }
-  const handleDeleteForm = async () => {
-    const response = await DeleteMyForm(
-      form.id,
-      user.data?.user?.email as string
-    );
 
+  const handleDeleteForm = async () => {
+    const response = await DeleteMyForm(form.id, email as string);
     toast("Form Deleted Successfully" + response?.id);
-    refetchData();
+    fetchUserForms();
   };
   return (
     <div className="border shadow-md rounded-lg p-4">

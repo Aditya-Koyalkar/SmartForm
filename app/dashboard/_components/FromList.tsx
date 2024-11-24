@@ -1,25 +1,41 @@
 "use client";
-import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FormDataItem } from "./FormDataItem";
-
-export const FormList = () => {
-  const user = JSON.parse(localStorage.getItem("userInfo") || "");
-  const [formList, setFormList] = useState<Form[]>([]);
-
+import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
+type FormType = {
+  id: string;
+  jsonform: string;
+  theme: string;
+  borderStyle: string;
+  enableAuth: boolean;
+  createdBy: string;
+  createdAt: string;
+};
+export const FormList = ({ email }: { email: string }) => {
+  const [formList, setFormList] = useState<FormType[]>([]);
+  const fetchUserForms = async () => {
+    const forms = await GetAllUserForms(email);
+    setFormList(forms as FormType[]);
+  };
   useEffect(() => {
     fetchUserForms();
-  }, []);
-  const fetchUserForms = async () => {
-    const forms = await GetAllUserForms(user?.email as string);
-    setFormList(forms ? forms : []);
-  };
+  }, [formList]);
+  if (formList.length == 0) {
+    return (
+      <div className="mt-20 justify-center flex ">
+        You don&apos;t have any forms currently.
+      </div>
+    );
+  }
   return (
     <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
       {formList.map((form, index: number) => (
         <div key={index}>
-          <FormDataItem form={form} refetchData={fetchUserForms} />
+          <FormDataItem
+            form={form}
+            email={email}
+            fetchUserForms={fetchUserForms}
+          />
         </div>
       ))}
     </div>

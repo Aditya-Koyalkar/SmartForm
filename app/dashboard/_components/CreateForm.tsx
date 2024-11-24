@@ -1,5 +1,4 @@
 "use client";
-import { Spinner } from "@/app/_components/Spinner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,17 +10,15 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { AIChatSession } from "@/config/AiModel";
-import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import { useState } from "react";
 import { CreateFormAction } from "@/app/actions/CreateForm";
 import { useRouter } from "next/navigation";
 
-export const CreateForm = () => {
+export const CreateForm = ({ email }: { email: string }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [userInput, setUserInput] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("userInfo") || "");
   const router = useRouter();
 
   const onCreateForm = async () => {
@@ -31,7 +28,7 @@ export const CreateForm = () => {
     if (result.response.text()) {
       const res = await CreateFormAction(
         result.response.text(),
-        user?.email as string
+        email as string
       );
       setLoading(false);
       setOpen(false);

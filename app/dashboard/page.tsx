@@ -1,33 +1,25 @@
-"use client";
-
-import { signIn, useSession } from "next-auth/react";
-import { Spinner } from "../_components/Spinner";
 import { CreateForm } from "./_components/CreateForm";
 import { FormList } from "./_components/FromList";
+import { auth } from "@clerk/nextjs/server";
+import { GetCurrentUser } from "../actions/GetCurrentUser";
 
-export default function Dashboard() {
-  const { status, data } = useSession();
-
-  if (status == "loading") {
-    return <Spinner />;
+export default async function Dashboard() {
+  const user = await auth();
+  if (!user || !user.userId) {
+    return <div>unauth</div>;
   }
-  if (status == "unauthenticated") {
-    return signIn();
+  const dbUser = await GetCurrentUser();
+  if (!dbUser) {
+    return <div>un auth</div>;
   }
-
-  if (status == "authenticated") {
-    localStorage.setItem("userInfo", JSON.stringify(data.user));
-  }
-
   return (
     <div className="p-10">
       <div className="font-bold text-2xl md:text-3xl flex items-center justify-between">
         <div>DashBoard</div>
-        <CreateForm />
+        <CreateForm email={dbUser.email} />
       </div>
-
       <div>
-        <FormList />
+        <FormList email={dbUser.email} />
       </div>
     </div>
   );

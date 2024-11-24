@@ -1,38 +1,34 @@
-"use client";
-import { Spinner } from "@/app/_components/Spinner";
-import { signIn, useSession } from "next-auth/react";
 import { Form } from "../_components/FromList";
-import { useEffect, useState } from "react";
 import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
 import { FormListItemResponse } from "./_components/FormListItemResponse";
+import { auth } from "@clerk/nextjs/server";
+import { GetCurrentUser } from "@/app/actions/GetCurrentUser";
 
-export default function Responses() {
-  const [formList, setFormList] = useState<Form[]>([]);
-  const user = JSON.parse(localStorage.getItem("userInfo") || "");
-  useEffect(() => {
-    fetchUserForms();
-  }, [user]);
-  const fetchUserForms = async () => {
-    const forms = await GetAllUserForms(user.data?.user?.email as string);
-    setFormList(forms ? forms : []);
-  };
-
-  if (user.status == "loading") {
-    return <Spinner />;
-  }
-  if (user.status == "unauthenticated") {
-    signIn();
-  }
+export default async function Responses() {
+  const user = await auth();
+  const dbUser = await GetCurrentUser();
+  const formList = await GetAllUserForms(dbUser?.email as string);
   return (
     <div className="p-10">
       <div className="font-bold text-3xl flex items-center justify-between">
         <div>Responses</div>
       </div>
-      <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
-        {formList.map((form, index) => (
-          <FormListItemResponse form={form} key={index} />
+      {formList &&
+        (formList.length == 0 ? (
+          <div className="text-center mt-20">
+            You don&apos;t have any forms currently.
+          </div>
+        ) : (
+          <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-5">
+            {formList.map((form, index) => (
+              <FormListItemResponse
+                form={form}
+                key={index}
+                email={dbUser?.email as string}
+              />
+            ))}
+          </div>
         ))}
-      </div>
     </div>
   );
 }

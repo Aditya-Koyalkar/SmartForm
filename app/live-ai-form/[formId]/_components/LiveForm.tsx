@@ -1,3 +1,4 @@
+"use client";
 import { CheckUserSubmitted } from "@/app/actions/CheckUserSubmitted";
 import { CreateFormResponse } from "@/app/actions/CreateFormResponse";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { signIn, useSession } from "next-auth/react";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
 
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -31,15 +32,22 @@ export const LiveFormUI = ({
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const formRef = useRef<HTMLFormElement>(null);
-  const user = useSession();
+  const { userId } = useAuth();
+  const user = useUser();
   const [canSubmit, setCanSubmit] = useState<boolean>(true);
   useEffect(() => {
-    if (authEnabled) fetchUserSubmitted();
+    if (authEnabled) {
+      if (user.isSignedIn) {
+        fetchUserSubmitted();
+      } else {
+        toast.message("please login to submit the form");
+      }
+    }
   }, [authEnabled]);
 
   const fetchUserSubmitted = async () => {
     const submitted = await CheckUserSubmitted(
-      user.data?.user?.email as string
+      user.user?.primaryEmailAddress?.emailAddress?.toString() as string
     );
     setCanSubmit(submitted as boolean);
   };
@@ -83,12 +91,11 @@ export const LiveFormUI = ({
   };
   const onFormSubmit = async (e: any) => {
     e.preventDefault();
-    const submittedBy = authEnabled ? user.data?.user?.email : "";
-    await CreateFormResponse(
-      JSON.stringify(formData),
-      formId,
-      submittedBy as string
-    );
+    const submittedBy = authEnabled
+      ? user.user?.primaryEmailAddress?.emailAddress
+      : "";
+    const data = JSON.stringify(formData);
+    await CreateFormResponse(data, formId, submittedBy as string);
     toast("Response Submitted SuccessFully");
     formRef.current?.reset();
     fetchUserSubmitted();
@@ -215,18 +222,14 @@ export const LiveFormUI = ({
         ))}
       </div>
       <div className="flex justify-center my-2 mt-6">
-        {authEnabled && user.status == "unauthenticated" ? (
-          <button
-            className="btn btn-primary"
-            onClick={() =>
-              signIn(undefined, {
-                callbackUrl:
-                  process.env.NEXT_PUBLIC_BASE_URL + "/live-ai-form/" + formId,
-              })
-            }
+        {authEnabled && !user.isSignedIn ? (
+          <SignInButton
+            forceRedirectUrl={`/auth-callback?url=live-ai-form/${formId}`}
           >
-            Sign In to Submit the form
-          </button>
+            <button className="btn btn-primary">
+              Sign In to Submit the form
+            </button>
+          </SignInButton>
         ) : (
           <button className="btn btn-primary" type="submit">
             Submit

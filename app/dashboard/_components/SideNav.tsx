@@ -3,7 +3,6 @@ import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { LibraryBig, LineChart, MessageSquare, Shield } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,14 +11,6 @@ import { Form } from "./FromList";
 export const SideNav = () => {
   const path = usePathname();
   const [formList, setFormList] = useState<Form[]>([]);
-  const user = useSession();
-  useEffect(() => {
-    if (user.data) fetchUserForms();
-  }, [user]);
-  const fetchUserForms = async () => {
-    const forms = await GetAllUserForms(user.data?.user?.email as string);
-    setFormList(forms ? forms : []);
-  };
 
   const menuList = [
     {

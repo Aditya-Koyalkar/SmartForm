@@ -6,6 +6,9 @@ export const GetAllUserForms = async (email: string) => {
       where: {
         createdBy: email,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     return forms;
   } catch (e) {

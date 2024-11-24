@@ -1,8 +1,8 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Form } from "../../_components/FromList";
 import { Download, Loader2 } from "lucide-react";
 import { GetFormResponses } from "@/app/actions/GetFormResponses";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import * as XLSX from "xlsx";
@@ -16,16 +16,18 @@ type Responses =
       createdAt: string;
     }[]
   | undefined;
-export const FormListItemResponse = ({ form }: { form: Form }) => {
+export const FormListItemResponse = ({
+  form,
+  email,
+}: {
+  form: Form;
+  email: string;
+}) => {
   const jsonForm = JSON.parse(form.jsonform);
   const [formResponses, setFormResponses] = useState<Responses>([]);
   const [loading, setLoading] = useState(false);
-  const user = useSession();
   const fetchFormResponses = async () => {
-    const responses = await GetFormResponses(
-      form.id,
-      user.data?.user?.email as string
-    );
+    const responses = await GetFormResponses(form.id, email as string);
     setFormResponses(responses);
   };
   useEffect(() => {
@@ -70,10 +72,11 @@ export const FormListItemResponse = ({ form }: { form: Form }) => {
       <hr className="my-4" />
       <div className="flex justify-between">
         <div className="sm">
-          <strong>{formResponses?.length}</strong> Responses
+          <strong>{formResponses?.length}</strong>{" "}
+          <span className="underline">Responses</span>
         </div>
         <Button
-          disabled={loading || user.status == "loading"}
+          disabled={loading}
           onClick={handleExportData}
           size={"sm"}
           className="flex items-center gap-2"
