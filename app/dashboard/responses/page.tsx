@@ -1,11 +1,8 @@
-import { Form } from "../_components/FromList";
 import { GetAllUserForms } from "@/app/actions/GetAllUserForm";
 import { FormListItemResponse } from "./_components/FormListItemResponse";
-import { auth } from "@clerk/nextjs/server";
 import { GetCurrentUser } from "@/app/actions/GetCurrentUser";
 
 export default async function Responses() {
-  const user = await auth();
   const dbUser = await GetCurrentUser();
   const formList = await GetAllUserForms(dbUser?.email as string);
   return (

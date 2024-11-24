@@ -5,7 +5,6 @@ import { Download, Loader2 } from "lucide-react";
 import { GetFormResponses } from "@/app/actions/GetFormResponses";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import * as XLSX from "xlsx";
 import Link from "next/link";
 import { exportToExcel } from "./exportToExcel";
 type Responses =
