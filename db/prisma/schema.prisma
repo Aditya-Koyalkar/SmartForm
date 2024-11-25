@@ -21,6 +21,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   forms Form[]
+  customStyles CustomStyles?
 }
 
 model Form {
@@ -28,6 +29,7 @@ model Form {
   jsonform String 
   theme String @default("light")
   borderStyle String @default("")
+  imageUrl String?
   enableAuth Boolean @default(false)
   createdBy String
   createdAt String 
@@ -42,4 +44,16 @@ model FormResponses {
   formId String
   createdAt String
   Form Form @relation(fields: [formId],references: [id])
+
+}
+
+
+model CustomStyles {
+  id String @id @default(uuid())
+  imageUrl String?
+  theme String @default("light")
+  borderStyle String @default("")
+  createdBy String @unique
+  user User @relation(fields: [createdBy],references: [email])
+
 }
