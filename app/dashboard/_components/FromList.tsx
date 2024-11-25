@@ -19,7 +19,7 @@ export const FormList = ({ email }: { email: string }) => {
   };
   useEffect(() => {
     fetchUserForms();
-  }, [formList]);
+  }, []);
   if (formList.length == 0) {
     return (
       <div className="mt-20 justify-center flex ">
