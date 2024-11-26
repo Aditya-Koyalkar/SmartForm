@@ -2,11 +2,11 @@ import { SideNav } from "./_components/SideNav";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <div className="hidden fixed md:block md:w-64 ">
+    <div className="flex">
+      <div className="hidden  md:block md:w-96 ">
         <SideNav />
       </div>
-      <div className="md:ml-64">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }
