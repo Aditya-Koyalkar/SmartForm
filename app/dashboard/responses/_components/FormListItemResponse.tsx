@@ -55,7 +55,7 @@ export const FormListItemResponse = ({
   return (
     <Link
       href={`/dashboard/responses/${form.id}`}
-      className="border shadow-md rounded-lg p-4 cursor-pointer"
+      className="border shadow-md rounded-lg p-4 cursor-pointer flex justify-center flex-col h-[250px]"
     >
       <div className="flex justify-between items-center">
         <div>{form.createdAt}</div>
@@ -64,7 +64,7 @@ export const FormListItemResponse = ({
       <div className=" text-lg">{jsonForm.formTitle}</div>
       <div className="text-sm text-slate-600">{jsonForm.formSubHeading}</div>
       <hr className="my-4" />
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div className="sm">
           <strong>{formResponses?.length}</strong>{" "}
           <span className="underline">Responses</span>

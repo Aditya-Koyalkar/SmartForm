@@ -34,7 +34,7 @@ export const FormDataItem = ({
     fetchUserForms();
   };
   return (
-    <div className="border shadow-md rounded-lg p-4">
+    <div className="border shadow-md rounded-lg p-4 h-[250px] flex flex-col justify-center">
       <div className="flex justify-between items-center">
         <div>{form.createdAt}</div>
         <AlertDialog>
@@ -74,7 +74,7 @@ export const FormDataItem = ({
           <Button
             variant={"outline"}
             size={"sm"}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 self-end"
           >
             <Share2 className="h-5 w-5" />
             Share
@@ -82,7 +82,7 @@ export const FormDataItem = ({
         </RWebShare>
 
         <Link href={`/edit-form/${form.id}`}>
-          <Button size={"sm"} className="flex items-center gap-2">
+          <Button size={"sm"} className="flex items-center gap-2 self-end">
             <Edit className="h-5 w-5" /> Edit
           </Button>
         </Link>
