@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SignInButton, useUser } from "@clerk/nextjs";
-import Image from "next/image";
 
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -118,15 +117,8 @@ export const LiveFormUI = ({
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
-      {imageUrl && (
-        <Image
-          src={imageUrl}
-          height={200}
-          width={200}
-          alt="bg"
-          className="w-full max-h-[150px]"
-        />
-      )}
+      {imageUrl && <img src={imageUrl} className="w-full max-h-[200px]" />}
+
       <div className="font-bold text-center text-xl mt-3">
         {jsonForm.formTitle}
       </div>

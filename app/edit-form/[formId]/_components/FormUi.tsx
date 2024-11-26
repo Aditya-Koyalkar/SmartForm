@@ -12,7 +12,6 @@ import {
 
 import React from "react";
 import { FieldEdit } from "./FieldEdit";
-import Image from "next/image";
 
 export const FormUI = ({
   jsonForm,
@@ -34,15 +33,8 @@ export const FormUI = ({
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
-      {imageUrl && (
-        <Image
-          src={imageUrl}
-          height={200}
-          width={200}
-          alt="bg"
-          className="w-full max-h-[150px]"
-        />
-      )}
+      {imageUrl && <img src={imageUrl} className="w-full max-h-[200px]" />}
+
       <div className="font-bold text-center text-xl mt-3">
         {jsonForm.formTitle}
       </div>
