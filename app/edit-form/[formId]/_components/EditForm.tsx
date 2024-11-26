@@ -60,6 +60,7 @@ export default function EditForm({
       setSelectedTheme(res?.theme as string);
       setBorderStyle(res?.borderStyle as string);
       setAuthEnabled(res?.enableAuth as boolean);
+      setImageUrl(res?.imageUrl as string);
     };
     getMyForm();
   }, [formId]);
