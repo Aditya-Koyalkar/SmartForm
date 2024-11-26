@@ -22,7 +22,7 @@ export const FormList = ({ email }: { email: string }) => {
   }, []);
   if (formList.length == 0) {
     return (
-      <div className="mt-20 justify-center flex ">
+      <div className="mt-20 w-full  flex justify-center ">
         You don&apos;t have any forms currently.
       </div>
     );
