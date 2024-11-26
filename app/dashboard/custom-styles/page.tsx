@@ -1,5 +1,4 @@
 import { GetCurrentUser } from "@/app/actions/GetCurrentUser";
-import { auth } from "@clerk/nextjs/server";
 import ConfigureCustomStyles from "./_components/ConfigureCustomStyles";
 
 const Page = async () => {
