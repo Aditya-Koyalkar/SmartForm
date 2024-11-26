@@ -36,9 +36,5 @@ export default async function FormResponse({
   const responses = formResponses.map((res) =>
     JSON.parse(res.jsonUserResponse)
   );
-  return (
-    <div>
-      <FormResponses responses={responses} form={form} />
-    </div>
-  );
+  return <FormResponses responses={responses} form={form} />;
 }

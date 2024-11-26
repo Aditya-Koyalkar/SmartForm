@@ -1,15 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/button";
 // import { Progress } from "@/components/ui/progress";
 import { LibraryBig, LineChart, MessageSquare, Shield } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CreateForm } from "./CreateForm";
+import { useUser } from "@clerk/nextjs";
 // // import { Form } from "./FromList";
 
 export const SideNav = () => {
   const path = usePathname();
+  const user = useUser();
   // const [formList, setFormList] = useState<Form[]>([]);
-
   const menuList = [
     {
       id: 1,
@@ -54,18 +55,11 @@ export const SideNav = () => {
         ))}
       </div>
       <div className="fixed bottom-10 p-6 w-64">
-        <Button className="w-full">+ Create Form</Button>
-        {/* <div className="my-7">
-          <Progress
-            value={33 * formList.length < 100 ? 33 * formList.length : 100}
+        {user.isSignedIn && (
+          <CreateForm
+            email={user.user?.primaryEmailAddress?.emailAddress as string}
           />
-          <div className="text-sm mt-2 text-gray-600">
-            <b> {formList.length} out of 3</b> File Created
-          </div>
-          <div className="text-sm mt-2 text-gray-600">
-            Upgrade your plan for unlimited AI forms
-          </div>
-        </div> */}
+        )}
       </div>
     </div>
   );

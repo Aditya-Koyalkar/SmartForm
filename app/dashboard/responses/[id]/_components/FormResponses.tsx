@@ -81,7 +81,7 @@ Based on the filter text, return the filtered responses.
   };
 
   return (
-    <div className="p-5">
+    <div className="p-5 ">
       <div className="w-full p-2 flex justify-between">
         <div className="flex gap-3 items-center">
           <Input
@@ -124,7 +124,7 @@ Based on the filter text, return the filtered responses.
           <FaArrowRotateLeft />
         </Button>
       </div>
-      <div className="mt-5 max-w-full sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1100px] overflow-x-auto">
+      <div className="mt-5 max-w-full sm:max-w-[640px] md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1200px] overflow-x-auto">
         <Table>
           <TableCaption>
             Responses of the <b>{jsonForm?.formTitle}</b>
