@@ -10,6 +10,9 @@ import {
 import { Themes } from "../../_data/Theme";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CustomStylesType } from "./EditForm";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const Controller = ({
   handleChangeTheme,
@@ -17,12 +20,16 @@ export const Controller = ({
   handleEnableAuthChange,
   borderStyle,
   authEnabled,
+  userCustomStyles,
+  handleSelectCustomStyles,
 }: {
   handleChangeTheme: (value: string) => void;
   handleBorderChange: (value: string) => void;
   handleEnableAuthChange: (value: boolean) => void;
   authEnabled: boolean;
   borderStyle: string;
+  userCustomStyles: CustomStylesType;
+  handleSelectCustomStyles: () => void;
 }) => {
   const [borderChecked, setBorderChecked] = useState<boolean>();
   const [authEnabledForm, setAuthEnabledForm] = useState<boolean>(false);
@@ -76,6 +83,25 @@ export const Controller = ({
           <Checkbox checked={authEnabled} onCheckedChange={toggleAuthEnable} />
           <div>By enabling this each user can only submit a single form </div>
         </div>
+      </div>
+      <div className="mt-3">
+        <div className="text-lg font-semibold">Custom Styles</div>
+        {userCustomStyles ? (
+          <Button
+            onClick={handleSelectCustomStyles}
+            className="mt-3 border-2 border-primary"
+            variant={"outline"}
+          >
+            Apply your custom styles
+          </Button>
+        ) : (
+          <div>
+            Configure your custom styles{" "}
+            <Link href={"/dashboard/custom-styles"} className="underline">
+              here
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

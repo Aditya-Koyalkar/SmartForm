@@ -13,13 +13,24 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RWebShare } from "react-web-share";
 import { ChangeEnableAuthForm } from "@/app/actions/ChangeEnableAuthForm";
+import { ApplyCustomStyling } from "@/app/actions/ApplyCustomStyles";
+
+export type CustomStylesType = {
+  id: string;
+  imageUrl: string | null;
+  theme: string;
+  borderStyle: string;
+  createdBy: string;
+} | null;
 
 export default function EditForm({
   formId,
   email,
+  userCustomStyles,
 }: {
   formId: string;
   email: string;
+  userCustomStyles: CustomStylesType;
 }) {
   const [jsonForm, setJsonForm] = useState<JSONForm>({
     formTitle: "",
@@ -38,6 +49,7 @@ export default function EditForm({
   const [updateTrigger, setUpdateTrigger] = useState<number>();
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [borderStyle, setBorderStyle] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [authEnabled, setAuthEnabled] = useState<boolean>(false);
   const router = useRouter();
 
@@ -92,6 +104,18 @@ export default function EditForm({
     await ChangeEnableAuthForm(value, formId, email as string);
     setAuthEnabled(value);
   };
+  const handleSelectCustomStyle = async () => {
+    await ApplyCustomStyling(
+      formId,
+      email,
+      userCustomStyles?.theme as string,
+      userCustomStyles?.imageUrl as string,
+      userCustomStyles?.borderStyle as string
+    );
+    setSelectedTheme(userCustomStyles?.theme as string);
+    setBorderStyle(userCustomStyles?.borderStyle as string);
+    setImageUrl(userCustomStyles?.imageUrl as string);
+  };
   return (
     <div className="p-5 md:p-10">
       <div className="flex items-center mb-3 justify-between">
@@ -138,6 +162,8 @@ export default function EditForm({
               borderStyle={borderStyle}
               handleEnableAuthChange={handleEnableAuthChange}
               authEnabled={authEnabled}
+              userCustomStyles={userCustomStyles}
+              handleSelectCustomStyles={handleSelectCustomStyle}
             />
           </div>
           <div className="col-span-2 flex  rounded-xl justify-center  w-full h-full">
@@ -147,6 +173,7 @@ export default function EditForm({
               onDelete={onDeleteField}
               selectedTheme={selectedTheme}
               borderStyle={borderStyle}
+              imageUrl={imageUrl}
             />
           </div>
         </div>

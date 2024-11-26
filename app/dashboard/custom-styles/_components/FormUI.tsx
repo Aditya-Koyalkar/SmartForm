@@ -8,18 +8,29 @@ import {
 } from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { Select } from "@radix-ui/react-select";
+import Image from "next/image";
 
 type Props = {
   selectedTheme: string;
   borderStyle: string;
+  imageUrl: string;
 };
 
-const FormUI = ({ selectedTheme, borderStyle }: Props) => {
+const FormUI = ({ selectedTheme, borderStyle, imageUrl }: Props) => {
   return (
     <form
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          width={100}
+          height={100}
+          alt="bg-image"
+          className="w-full max-h-[150px]"
+        />
+      )}
       <div className="font-bold text-center text-xl">Title</div>
       <div className="text-sm text-gray-400 text-center">Feedback Form</div>
       <div className="flex flex-col gap-4 mt-3">

@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SignInButton, useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -23,12 +24,14 @@ export const LiveFormUI = ({
   borderStyle,
   formId,
   authEnabled,
+  imageUrl,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
   borderStyle: string;
   formId: string;
   authEnabled: boolean;
+  imageUrl: string;
 }) => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const formRef = useRef<HTMLFormElement>(null);
@@ -115,7 +118,18 @@ export const LiveFormUI = ({
       className={`md:w-[600px] rounded-xl p-6 shadow-md ${borderStyle}`}
       data-theme={selectedTheme}
     >
-      <div className="font-bold text-center text-xl">{jsonForm.formTitle}</div>
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          height={200}
+          width={200}
+          alt="bg"
+          className="w-full max-h-[150px]"
+        />
+      )}
+      <div className="font-bold text-center text-xl mt-3">
+        {jsonForm.formTitle}
+      </div>
       <div className="text-sm text-gray-400 text-center">
         {jsonForm.formSubHeading}
       </div>

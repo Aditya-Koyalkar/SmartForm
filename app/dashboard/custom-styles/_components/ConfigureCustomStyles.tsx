@@ -9,15 +9,17 @@ import {
 } from "@/components/ui/select";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Themes } from "@/app/edit-form/_data/Theme";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import FormUI from "./FormUI";
 import { createUserCustomStyle } from "@/app/actions/CreateCustomStyle";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { getUserCustomStyle } from "@/app/actions/GetUserCustomStyle";
+
+import { CldUploadWidget } from "next-cloudinary";
+import { cn } from "@/lib/utils";
 
 type Props = {
   user: {
@@ -51,9 +53,11 @@ const ConfigureCustomStyles = ({ user }: Props) => {
       setBorderStyle(customStyles.borderStyle);
     }
   };
+
   useEffect(() => {
     fetchUserCustomStyles();
   }, []);
+  console.log(imageUrl);
   return (
     <div className="w-full  h-full p-10">
       <div className="flex flex-col md:flex-row gap-2">
@@ -70,7 +74,41 @@ const ConfigureCustomStyles = ({ user }: Props) => {
                   {" "}
                   Upload background Image for your forms
                 </div>
-                <Input type={"file"} />
+                <CldUploadWidget
+                  onSuccess={(result, { widget }) => {
+                    if (
+                      typeof result.info === "object" &&
+                      "secure_url" in result.info
+                    ) {
+                      setImageUrl(result.info.secure_url);
+                      console.log(result.info.secure_url);
+                    }
+                    console.log(result);
+                    widget.close();
+                  }}
+                  options={{
+                    multiple: false,
+                    singleUploadAutoClose: true,
+                    clientAllowedFormats: ["image"],
+                  }}
+                  uploadPreset="smartform"
+                >
+                  {({ open }) => {
+                    return (
+                      <button
+                        onClick={() => open()}
+                        className={cn(
+                          buttonVariants({
+                            variant: "outline",
+                          }),
+                          "w-44 border-2 border-primary"
+                        )}
+                      >
+                        Upload an Image
+                      </button>
+                    );
+                  }}
+                </CldUploadWidget>
               </Label>
               <div className="mt-5">
                 <Label className="font-semibold text-lg">Select Theme</Label>
@@ -126,7 +164,11 @@ const ConfigureCustomStyles = ({ user }: Props) => {
           </div>
         </div>
         <div className="border">
-          <FormUI borderStyle={borderStyle} selectedTheme={theme} />
+          <FormUI
+            imageUrl={imageUrl}
+            borderStyle={borderStyle}
+            selectedTheme={theme}
+          />
         </div>
       </div>
     </div>
