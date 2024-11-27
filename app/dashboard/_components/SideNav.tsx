@@ -54,7 +54,7 @@ export const SideNav = () => {
           </Link>
         ))}
       </div>
-      <div className="fixed bottom-10 p-6 w-64">
+      <div className="fixed bottom-10 p-6 ">
         {user.isSignedIn && (
           <CreateForm
             email={user.user?.primaryEmailAddress?.emailAddress as string}
