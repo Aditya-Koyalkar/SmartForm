@@ -17,7 +17,7 @@ const Logo = ({
         fontSize
       )}
     >
-      <div className="rounded-xl bg-gradient-to-r from-primary to-emerald-600 p-2">
+      <div className="rounded-xl bg-gradient-to-r from-primary to-blue-300 p-2">
         <SquareMenu size={iconSize} className="stroke-white" />
       </div>
       <div>
