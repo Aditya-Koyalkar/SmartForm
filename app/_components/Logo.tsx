@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { SquareDashedMousePointer } from "lucide-react";
+import { SquareMenu } from "lucide-react";
 import Link from "next/link";
 
 const Logo = ({
@@ -18,7 +18,7 @@ const Logo = ({
       )}
     >
       <div className="rounded-xl bg-gradient-to-r from-primary to-emerald-600 p-2">
-        <SquareDashedMousePointer size={iconSize} className="stroke-white" />
+        <SquareMenu size={iconSize} className="stroke-white" />
       </div>
       <div>
         <span className="bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
