@@ -4,9 +4,9 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut, SignUpButton, UserButton } from "@clerk/nextjs";
 import { Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 
 const Header = () => {
   const path = usePathname();
@@ -15,12 +15,7 @@ const Header = () => {
     !path.includes("live-ai-form") && (
       <div className="p-5 shadow-md border">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-1">
-            <Image src={"/logo.svg"} alt="logo" width={30} height={30} />
-            <div className="text-primary font-semibold font-mono">
-              Smart Form AI
-            </div>
-          </div>
+          <Logo />
           <div>
             <SignedIn>
               <div className="flex gap-5 items-center">
