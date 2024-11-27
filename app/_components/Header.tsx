@@ -12,7 +12,8 @@ const Header = () => {
   const path = usePathname();
 
   return (
-    !path.includes("live-ai-form") && (
+    !path.includes("live-ai-form") &&
+    !path.includes("auth-callback") && (
       <div className="p-5 shadow-md border">
         <div className="flex justify-between items-center">
           <Logo />
