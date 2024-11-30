@@ -117,6 +117,24 @@ export default function EditForm({
     setBorderStyle(userCustomStyles?.borderStyle as string);
     setImageUrl(userCustomStyles?.imageUrl as string);
   };
+
+  const onFieldAdd = (label: string, placeholder: string) => {
+    const newField = {
+      fieldName: `field_${jsonForm.formFields.length + 1}`,
+      placeholder: placeholder || "Enter placeholder",
+      label: label || "New Field",
+      fieldType: "text", // Default to text field; you can modify as needed
+      required: true,
+      options: [],
+    };
+    const updatedJson = {
+      ...jsonForm,
+      formFields: [...jsonForm.formFields, newField],
+    };
+    setJsonForm(updatedJson as JSONForm);
+    setUpdateTrigger(Date.now());
+  };
+
   return (
     <div className="p-5 md:p-10">
       <div className="flex items-center mb-3 justify-between">
@@ -175,6 +193,7 @@ export default function EditForm({
               selectedTheme={selectedTheme}
               borderStyle={borderStyle}
               imageUrl={imageUrl}
+              onFieldAdd={onFieldAdd}
             />
           </div>
         </div>

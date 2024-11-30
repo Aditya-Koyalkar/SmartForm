@@ -12,6 +12,7 @@ import {
 
 import React from "react";
 import { FieldEdit } from "./FieldEdit";
+import { AddField } from "./AddField";
 
 export const FormUI = ({
   jsonForm,
@@ -20,6 +21,7 @@ export const FormUI = ({
   imageUrl,
   onFieldUpdate,
   onDelete,
+  onFieldAdd,
 }: {
   jsonForm: JSONForm;
   selectedTheme: string;
@@ -27,6 +29,7 @@ export const FormUI = ({
   imageUrl: string;
   onFieldUpdate: (label: string, placeholder: string, index: number) => void;
   onDelete: (index: number) => void;
+  onFieldAdd: (label: string, placeholder: string) => void;
 }) => {
   return (
     <div
@@ -153,6 +156,7 @@ export const FormUI = ({
           </div>
         ))}
       </div>
+      <AddField onFieldAdd={onFieldAdd} />
       <div className="flex justify-center my-2 mt-6">
         <button className="btn btn-primary">Submit</button>
       </div>
