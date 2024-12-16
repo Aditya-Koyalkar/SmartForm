@@ -46,7 +46,7 @@ const Hero = () => {
       </div>
       <div className=" text-[35px] font-extrabold text-center">How It Works ?</div>
       <div className=" flex flex-col md:flex-row gap-5  justify-center  items-center  p-10 md:p-14">
-        <div className=" shadow-lg bg-[#ffff] rounded-xl px-4 py-6 h-[200px] md:w-[800px]">
+        <div className=" shadow-lg bg-[#ffff] rounded-xl px-4 py-6 h-[180px] md:w-[800px] h-300">
           <div className="flex items-center gap-3">
             <MdOutlineFormatAlignLeft className="h-[25px] w-[25px] text-black" />
             <div className=" text-[20px] font-bold">Write a Prompt for your Form</div>
