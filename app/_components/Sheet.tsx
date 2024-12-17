@@ -1,6 +1,6 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { LibraryBig, LineChart, Menu, MessageSquare, Shield, Star } from "lucide-react";
