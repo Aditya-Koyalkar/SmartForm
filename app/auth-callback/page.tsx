@@ -17,11 +17,8 @@ const AuthCallback = () => {
         if (!userId || !user) {
           return;
         }
-        await CreateUser(
-          userId,
-          user.user?.primaryEmailAddress?.emailAddress as string,
-          user.user?.fullName as string
-        );
+        const dbUser = await CreateUser(userId, user.user?.primaryEmailAddress?.emailAddress as string, user.user?.fullName as string);
+        console.log("creating...." + dbUser);
         router.push(redirectUrl ? `/${redirectUrl}` : "/dashboard");
       } catch (e) {
         console.log(e);

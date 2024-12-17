@@ -9,6 +9,7 @@ export const CreateFormAction = async (jsonRes: string, email: string) => {
         createdBy: email,
         jsonform: jsonRes,
         createdAt: moment().format("DD/MM/YYYY"),
+        createdDate: new Date(),
       },
     });
     return res;

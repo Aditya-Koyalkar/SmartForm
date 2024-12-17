@@ -20,6 +20,7 @@ export async function CreateUser(userId: string, email: string, name: string) {
         name,
       },
     });
+
     return newUser;
   } catch (e) {
     console.log(e);

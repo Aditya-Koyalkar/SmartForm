@@ -33,6 +33,7 @@ model Form {
   enableAuth Boolean @default(false)
   createdBy String
   createdAt String 
+  createdDate DateTime
   user User @relation(fields: [createdBy],references: [email])
   responses FormResponses[]
 }
@@ -43,8 +44,8 @@ model FormResponses {
   jsonUserResponse String
   formId String
   createdAt String
+  createdDate DateTime
   Form Form @relation(fields: [formId],references: [id])
-
 }
 
 
