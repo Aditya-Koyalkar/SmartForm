@@ -2,11 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: ["class"],
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     container: {
       center: true,
@@ -61,7 +57,38 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("daisyui")],
+  daisyui: {
+    themes: [
+      "light",
+      "dark",
+      "nord",
+      "retro",
+      "aqua",
+      "valentine",
+      "cupcake",
+      "corporate",
+      "synthwave",
+      "cyberpunk",
+      "halloween",
+      "garden",
+      "forest",
+      "lofi",
+      "wireframe",
+      "black",
+      "luxury",
+      "dracula",
+      "autumn",
+      "business",
+      "acid",
+      "lemonade",
+      "night",
+      "coffee",
+      "winter",
+      "dim",
+      "sunset",
+    ],
+  },
 };
 
 export default config;
