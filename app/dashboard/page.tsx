@@ -2,6 +2,7 @@ import { CreateForm } from "./_components/CreateForm";
 import { FormList } from "./_components/FromList";
 import { auth } from "@clerk/nextjs/server";
 import { GetCurrentUser } from "../actions/GetCurrentUser";
+import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const user = await auth();
@@ -10,7 +11,7 @@ export default async function Dashboard() {
   }
   const dbUser = await GetCurrentUser();
   if (!dbUser) {
-    return <div>un auth</div>;
+    redirect("/auth-callback");
   }
   return (
     <div className="p-10">
